@@ -1,11 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+
 <body>
-  무궁무진한 데이터의 바다
+  <div id="root"></div>
+  <script>
+    const keyName = "SP6poFNj53tVrUmPFA7YiAuohTBnOXQ%2BUE4J6uq0ItPV49i%2Bu2%2FVXlNUnq5v3WumEyZthjVOj9wG%2FotkQW%2F5kg%3D%3D";
+    const example = `http://apis.data.go.kr/6300000/eventDataService/eventDataListJson?serviceKey=${keyName}&numOfRows=10&pageNo=1`
+
+    const AJAX = () => {
+      const xhr = new XMLHttpRequest()
+      console.log(xhr)
+      xhr.open('GET', `${example}`, true)
+
+      xhr.addEventListener('load', () => {
+        if (xhr.status === 200) {
+          console.log("데이터 받은 후 조회")
+
+          const result = JSON.parse(xhr.responseText)
+          console.log(result.msgBody)
+
+          const ajax = result.msgBody
+
+          const root = document.getElementById("root");
+            const ul = document.createElement("ul");
+            ajax.forEach((ele) => {
+              const li = document.createElement("li");
+              li.textContent = ele.title;
+              ul.appendChild(li);
+            });
+            root.appendChild(ul);
+        }
+      })
+      xhr.send();
+    }
+    AJAX();
+
+
+
+  </script>
 </body>
+
 </html>
